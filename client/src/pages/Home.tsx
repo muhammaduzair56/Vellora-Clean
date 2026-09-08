@@ -21,6 +21,10 @@ const heroImage = "/manus-storage/vellora-hero-interior_7844e28a.png";
 const serviceImage = "/manus-storage/vellora-service-detail_6f37688d.png";
 const processImage = "/manus-storage/vellora-process-detail_e45738de.png";
 const brandMark = "/manus-storage/vellora-clean-mark_c199c87e.png";
+const beforeKitchen = "/manus-storage/vellora-before-kitchen_8092324d.png";
+const afterKitchen = "/manus-storage/vellora-after-kitchen_f5be3759.png";
+const beforeBathroom = "/manus-storage/vellora-before-bathroom_c24f3407.png";
+const afterBathroom = "/manus-storage/vellora-after-bathroom_8e4e84e6.png";
 
 // Vellora Clean style reminder: asymmetric editorial layouts, navy/mint/lavender, calm motion, precise service copy.
 export default function Home() {
@@ -112,6 +116,17 @@ export default function Home() {
               <div className="service-image-card"><img src={serviceImage} alt="Spotless kitchen surface with refined details" /><div className="image-note">A quiet kind of <span>care</span>.</div></div>
               <div className="service-list">{services.map((service, index) => <article className="service-item" key={service.title}><span className="service-number">0{index + 1}</span><div><h3>{service.title}</h3><p>{service.description}</p></div><ChevronRight size={20} /></article>)}</div>
             </div>
+          </div>
+        </section>
+
+        <section id="results" className="section-block results-section">
+          <div className="shell">
+            <div className="section-heading-row results-heading"><div><div className="eyebrow"><span className="sparkle">✦</span> The difference is in the detail</div><h2>From lived-in<br /><em>to lovely.</em></h2></div><p>See the kind of thoughtful transformation Vellora Clean is built around—from high-use kitchens to the details that make a bathroom feel fresh again.</p></div>
+            <div className="results-grid">
+              <article className="result-card"><div className="result-card-top"><span>Kitchen reset</span><span>Illustrative example</span></div><div className="comparison-pair"><figure><img src={beforeKitchen} alt="Illustrative kitchen before a professional clean" /><figcaption>Before</figcaption></figure><figure><img src={afterKitchen} alt="Illustrative kitchen after a professional clean" /><figcaption className="after-label">After</figcaption></figure></div><div className="result-card-footer"><h3>Everyday surfaces, considered.</h3><p>Worktops, fixtures and the small touchpoints that change how a kitchen feels.</p></div></article>
+              <article className="result-card"><div className="result-card-top"><span>Bathroom detail</span><span>Illustrative example</span></div><div className="comparison-pair"><figure><img src={beforeBathroom} alt="Illustrative bathroom before a professional clean" /><figcaption>Before</figcaption></figure><figure><img src={afterBathroom} alt="Illustrative bathroom after a professional clean" /><figcaption className="after-label">After</figcaption></figure></div><div className="result-card-footer"><h3>A clearer kind of calm.</h3><p>Polished surfaces, bright glass and a finish that feels cared for.</p></div></article>
+            </div>
+            <div className="results-disclaimer"><span className="sparkle">✦</span><p>These are illustrative visuals for the website. We will replace them with original Vellora Clean project photography as your results library grows.</p><button className="text-link" onClick={() => scrollTo("quote")}>Start your project <ArrowRight size={16} /></button></div>
           </div>
         </section>
 

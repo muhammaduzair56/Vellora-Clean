@@ -7,4 +7,7 @@
 - [x] Add dedicated blog listing and article detail experience with original content.
 - [x] Add richer imagery, service sections and page-level navigation.
 - [x] Verify desktop, mobile and blog interactions.
+- [x] Define a truthful Before & After gallery presentation using original or user-provided results.
+- [x] Implement the responsive Before & After gallery section on the homepage.
+- [x] Verify the gallery on desktop and mobile.
 - [ ] Save a redevelopment checkpoint and report the result.

@@ -280,3 +280,24 @@ h1, h2, p { margin-top: 0; }
 .aside-journal-link { margin-top: 25px; }
 @media (max-width: 900px) { .blog-hero-grid, .blog-cta-inner, .article-layout { grid-template-columns: 1fr; gap: 47px; } .blog-hero-image { max-width: 620px; } .blog-grid { grid-template-columns: repeat(2, 1fr); } .article-layout { gap: 54px; } .article-aside { position: static; max-width: 470px; } }
 @media (max-width: 600px) { .site-header { position: sticky; } .blog-hero { padding: 61px 0 70px; } .blog-hero h1, .article-hero h1 { font-size: 49px; } .blog-hero p { font-size: 15px; } .blog-hero-image img { height: 360px; border-radius: 4px 90px 4px 4px; } .blog-grid { grid-template-columns: 1fr; gap: 38px; } .blog-card-image { height: 230px; } .blog-card h3, .blog-card > p { min-height: 0; } .blog-cta { padding: 74px 0; } .blog-cta-inner { gap: 28px; } .article-hero { padding: 53px 0 67px; } .back-link { margin-bottom: 35px; } .article-hero p { font-size: 15px; } .article-body { padding: 64px 0 85px; } .article-cover { height: 300px; border-radius: 4px 85px 4px 4px; } .article-section { padding-top: 34px; } .article-section h2 { font-size: 25px; } .article-section p { font-size: 14px; } }
+
+/* Before & After gallery: visual proof presented honestly until original project photography is available. */
+.results-section { background: #f5f8f7; }
+.results-heading { align-items: end; }
+.results-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 46px; }
+.result-card { overflow: hidden; background: #fff; border: 1px solid rgba(6,43,99,.09); box-shadow: 0 18px 38px rgba(6,43,99,.08); }
+.result-card-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 17px 20px; color: var(--navy); font: 800 10px/1.2 "Manrope", sans-serif; letter-spacing: .11em; text-transform: uppercase; }
+.result-card-top span:last-child { color: #758295; font-weight: 600; letter-spacing: .04em; text-transform: none; }
+.comparison-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--navy); }
+.comparison-pair figure { position: relative; min-width: 0; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; }
+.comparison-pair img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.comparison-pair figcaption { position: absolute; left: 12px; bottom: 12px; padding: 7px 10px; background: rgba(6,43,99,.9); color: white; font: 800 10px/1 "Manrope", sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.comparison-pair .after-label { background: var(--mint); color: var(--navy); }
+.result-card-footer { padding: 22px 20px 24px; }
+.result-card-footer h3 { margin: 0 0 7px; color: var(--navy); font-size: 22px; line-height: 1.1; }
+.result-card-footer p { max-width: 360px; margin: 0; color: var(--muted-ink); font-size: 13px; line-height: 1.65; }
+.results-disclaimer { display: flex; align-items: center; gap: 12px; margin-top: 28px; padding: 17px 19px; background: rgba(255,255,255,.72); border: 1px solid rgba(6,43,99,.08); }
+.results-disclaimer .sparkle { flex: 0 0 auto; }
+.results-disclaimer p { flex: 1; margin: 0; color: var(--muted-ink); font-size: 11px; line-height: 1.55; }
+.results-disclaimer .text-link { flex: 0 0 auto; white-space: nowrap; }
+@media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; margin-top: 31px; } .result-card-top { padding: 14px 15px; } .result-card-top span:last-child { font-size: 9px; } .result-card-footer { padding: 18px 15px 20px; } .result-card-footer h3 { font-size: 20px; } .results-disclaimer { align-items: flex-start; flex-wrap: wrap; padding: 15px; } .results-disclaimer p { flex: 1 1 calc(100% - 32px); } .results-disclaimer .text-link { margin-left: 32px; } }
