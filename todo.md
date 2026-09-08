@@ -13,4 +13,8 @@
 - [x] Define accessible drag, touch and keyboard behavior for the Before & After slider.
 - [x] Build and integrate the reusable Before & After slider component.
 - [x] Verify slider behavior on desktop and mobile.
+- [x] Inspect the current mobile header layout and Git state.
+- [x] Fix logo-left and hamburger-right alignment with balanced edge padding.
+- [x] Verify the header on mobile and desktop.
+- [ ] Commit and push the verified header fix to GitHub main.
 - [ ] Save a redevelopment checkpoint and report the result.

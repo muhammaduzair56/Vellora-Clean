@@ -321,3 +321,11 @@ h1, h2, p { margin-top: 0; }
 .comparison-slider-handle:focus-visible { outline: 3px solid var(--lavender); outline-offset: 4px; }
 .comparison-slider-handle:active .comparison-slider-grip { transform: translate(-50%, -50%) scale(.96); }
 @media (max-width: 700px) { .comparison-slider { aspect-ratio: 4 / 3; } .comparison-label { top: 9px; padding: 6px 8px; font-size: 9px; } .comparison-label-before { left: 9px; } .comparison-label-after { right: 9px; } }
+
+/* Mobile header alignment fix: use the full shell width with balanced edge spacing. */
+@media (max-width: 900px) {
+  .header-inner { justify-content: space-between; }
+  .header-actions { margin-left: auto; }
+  .brand-lockup { flex: 0 0 auto; }
+  .menu-trigger { margin-left: 0; padding: 10px 0 10px 10px; }
+}
