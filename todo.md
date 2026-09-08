@@ -10,4 +10,7 @@
 - [x] Define a truthful Before & After gallery presentation using original or user-provided results.
 - [x] Implement the responsive Before & After gallery section on the homepage.
 - [x] Verify the gallery on desktop and mobile.
+- [x] Define accessible drag, touch and keyboard behavior for the Before & After slider.
+- [x] Build and integrate the reusable Before & After slider component.
+- [x] Verify slider behavior on desktop and mobile.
 - [ ] Save a redevelopment checkpoint and report the result.

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { services, serviceAreas } from "@/lib/constants";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
 const heroImage = "/manus-storage/vellora-hero-interior_7844e28a.png";
 const serviceImage = "/manus-storage/vellora-service-detail_6f37688d.png";
@@ -123,8 +124,8 @@ export default function Home() {
           <div className="shell">
             <div className="section-heading-row results-heading"><div><div className="eyebrow"><span className="sparkle">✦</span> The difference is in the detail</div><h2>From lived-in<br /><em>to lovely.</em></h2></div><p>See the kind of thoughtful transformation Vellora Clean is built around—from high-use kitchens to the details that make a bathroom feel fresh again.</p></div>
             <div className="results-grid">
-              <article className="result-card"><div className="result-card-top"><span>Kitchen reset</span><span>Illustrative example</span></div><div className="comparison-pair"><figure><img src={beforeKitchen} alt="Illustrative kitchen before a professional clean" /><figcaption>Before</figcaption></figure><figure><img src={afterKitchen} alt="Illustrative kitchen after a professional clean" /><figcaption className="after-label">After</figcaption></figure></div><div className="result-card-footer"><h3>Everyday surfaces, considered.</h3><p>Worktops, fixtures and the small touchpoints that change how a kitchen feels.</p></div></article>
-              <article className="result-card"><div className="result-card-top"><span>Bathroom detail</span><span>Illustrative example</span></div><div className="comparison-pair"><figure><img src={beforeBathroom} alt="Illustrative bathroom before a professional clean" /><figcaption>Before</figcaption></figure><figure><img src={afterBathroom} alt="Illustrative bathroom after a professional clean" /><figcaption className="after-label">After</figcaption></figure></div><div className="result-card-footer"><h3>A clearer kind of calm.</h3><p>Polished surfaces, bright glass and a finish that feels cared for.</p></div></article>
+              <article className="result-card"><div className="result-card-top"><span>Kitchen reset</span><span>Illustrative example</span></div><BeforeAfterSlider before={beforeKitchen} after={afterKitchen} beforeAlt="Illustrative kitchen before a professional clean" afterAlt="Illustrative kitchen after a professional clean" /><div className="result-card-footer"><h3>Everyday surfaces, considered.</h3><p>Worktops, fixtures and the small touchpoints that change how a kitchen feels.</p></div></article>
+              <article className="result-card"><div className="result-card-top"><span>Bathroom detail</span><span>Illustrative example</span></div><BeforeAfterSlider before={beforeBathroom} after={afterBathroom} beforeAlt="Illustrative bathroom before a professional clean" afterAlt="Illustrative bathroom after a professional clean" /><div className="result-card-footer"><h3>A clearer kind of calm.</h3><p>Polished surfaces, bright glass and a finish that feels cared for.</p></div></article>
             </div>
             <div className="results-disclaimer"><span className="sparkle">✦</span><p>These are illustrative visuals for the website. We will replace them with original Vellora Clean project photography as your results library grows.</p><button className="text-link" onClick={() => scrollTo("quote")}>Start your project <ArrowRight size={16} /></button></div>
           </div>
