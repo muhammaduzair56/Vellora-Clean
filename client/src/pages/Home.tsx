@@ -49,7 +49,7 @@ export default function Home() {
             <button onClick={() => scrollTo("services")}>Services</button>
             <button onClick={() => scrollTo("how-it-works")}>How it works</button>
             <button onClick={() => scrollTo("areas")}>Service areas</button>
-            <button onClick={() => scrollTo("faq")}>FAQ</button>
+            <button onClick={() => scrollTo("faq")}>FAQ</button><a href="/blog">Journal</a>
           </nav>
           <div className="header-actions">
             <a className="header-email" href="mailto:hello.velloraclean@gmail.com">hello.velloraclean@gmail.com</a>
@@ -69,6 +69,7 @@ export default function Home() {
             {[['services', 'Services'], ['how-it-works', 'How it works'], ['areas', 'Service areas'], ['faq', 'FAQ'], ['quote', 'Request a quote']].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)}>{label}<ChevronRight size={22} /></button>
             ))}
+            <button onClick={() => { setMenuOpen(false); window.location.href = '/blog'; }}>Journal <ChevronRight size={22} /></button>
           </nav>
           <p>Professional cleaning for homes, rentals and businesses across the Midlands.</p>
         </div>

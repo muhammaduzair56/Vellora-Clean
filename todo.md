@@ -1,7 +1,10 @@
-# Vellora Clean GitHub Push
+# Vellora Clean Redevelopment
 
-- [ ] Confirm the GitHub repository and current local repository state.
-- [ ] Ensure README.md identifies the Vellora Clean project.
-- [ ] Commit the completed website source on the main branch.
-- [ ] Push the main branch to muhammaduzair56/Vellora-Clean.
-- [ ] Verify the remote branch and provide the GitHub/Vercel next step.
+- [x] Review martillacleaning.com structure, navigation, content hierarchy and visual patterns.
+- [x] Record original redesign decisions for Vellora Clean without copying the reference.
+- [x] Create additional branded website imagery for services and blog content.
+- [x] Implement sticky A-to-Z navbar and mobile drawer.
+- [x] Add dedicated blog listing and article detail experience with original content.
+- [x] Add richer imagery, service sections and page-level navigation.
+- [x] Verify desktop, mobile and blog interactions.
+- [ ] Save a redevelopment checkpoint and report the result.
