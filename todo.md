@@ -17,4 +17,15 @@
 - [x] Fix logo-left and hamburger-right alignment with balanced edge padding.
 - [x] Verify the header on mobile and desktop.
 - [x] Commit and push the verified header fix to GitHub main.
-- [ ] Save a redevelopment checkpoint and report the result.
+- [ ] Inspect the live Vercel deployment URL and build settings.
+- [ ] Inspect the actual Vercel project domain and deployment aliases.
+- [ ] Correct the Vercel repository/project deployment mapping if needed.
+- [ ] Verify the live deployed homepage and routes.
+- [ ] Save a deployment-repair checkpoint and report the working URL.
+- [ ] Inspect whether vercel.json exists and whether SPA rewrites are configured.
+- [ ] Add the Vercel fallback rewrite without changing UI behavior.
+- [ ] Run typecheck/build and verify direct route handling.
+- [ ] Commit and push the Vercel rewrite fix to GitHub main.
+- [ ] Define multiple original visual website template directions using the approved Vellora Clean brand.
+- [ ] Generate desktop website mockup pictures for the selected directions without editing code.
+- [ ] Package the mockups for comparison and collect the user's preferred direction.
