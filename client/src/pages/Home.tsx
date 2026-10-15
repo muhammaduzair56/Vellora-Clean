@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,6 +19,7 @@ import {
   serviceAreas,
   whatsappBookingUrl,
   whatsappDisplayPhone,
+  whatsappPhone,
 } from "@/lib/constants";
 
 const heroImage = "/images/vellora-hero.webp";
@@ -28,6 +29,52 @@ const resetImage = "/images/vellora-reset.webp";
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [bookingUrl, setBookingUrl] = useState("");
+  const [showFloatingBooking, setShowFloatingBooking] = useState(false);
+
+  useEffect(() => {
+    const updateFloatingBooking = () => {
+      const heroBottom = document
+        .querySelector(".hero-section")
+        ?.getBoundingClientRect().bottom;
+      setShowFloatingBooking(
+        typeof heroBottom === "number" && heroBottom < window.innerHeight * 0.62
+      );
+    };
+    updateFloatingBooking();
+    window.addEventListener("scroll", updateFloatingBooking, { passive: true });
+    window.addEventListener("resize", updateFloatingBooking);
+    return () => {
+      window.removeEventListener("scroll", updateFloatingBooking);
+      window.removeEventListener("resize", updateFloatingBooking);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const elements = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-reveal]")
+    );
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach(element => element.classList.add("is-revealed"));
+      return;
+    }
+    document.documentElement.classList.add("motion-ready");
+    const observer = new IntersectionObserver(
+      entries =>
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }),
+      { threshold: 0.12, rootMargin: "0px 0px -36px 0px" }
+    );
+    elements.forEach(element => observer.observe(element));
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("motion-ready");
+    };
+  }, []);
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
@@ -36,6 +83,27 @@ export default function Home() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const values = [
+      ["Name", formData.get("name")],
+      ["Phone", formData.get("phone")],
+      ["Area / postcode", formData.get("area")],
+      ["Property", formData.get("property")],
+      ["Bedrooms", formData.get("bedrooms")],
+      ["Bathrooms", formData.get("bathrooms")],
+      ["Service", formData.get("service")],
+      ["Frequency", formData.get("frequency")],
+      ["Preferred date", formData.get("date")],
+      ["Notes", formData.get("message")],
+    ].filter(([, value]) => typeof value === "string" && value.trim());
+    const message = [
+      "Hello Vellora Clean, I'd like to enquire about a cleaning booking.",
+      ...values.map(([label, value]) => `${label}: ${String(value).trim()}`),
+      "Please let me know availability and the next steps.",
+    ].join("\n");
+    const url = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
+    setBookingUrl(url);
+    window.open(url, "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
@@ -47,7 +115,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f8fbfe] text-[#263442] selection:bg-[#B69AE8]/30">
+    <div
+      className={`min-h-screen overflow-x-hidden bg-[#f8fbfe] text-[#263442] selection:bg-[#B69AE8]/30${showFloatingBooking ? " show-floating-booking" : ""}`}
+    >
       <header className="site-header">
         <div className="shell header-inner">
           <a
@@ -215,16 +285,24 @@ export default function Home() {
                 alt="Sunlit, freshly cared-for living space in a calm modern home"
                 fetchPriority="high"
               />
-              <div className="hero-caption">
-                <Sparkles size={17} />
-                <span>
-                  Come home to a space
-                  <br />
-                  <strong>that feels like yours again.</strong>
-                </span>
+              <div className="hero-media-meta">
+                <div className="hero-caption">
+                  <Sparkles size={17} />
+                  <span>
+                    Come home to a space
+                    <br />
+                    <strong>that feels like yours again.</strong>
+                  </span>
+                </div>
+                <div className="hero-media-proof">
+                  <div className="hero-location">
+                    Proudly serving the Midlands
+                  </div>
+                  <span className="hero-image-index">
+                    01 / 03 · Vellora Clean
+                  </span>
+                </div>
               </div>
-              <div className="hero-location">Proudly serving the Midlands</div>
-              <span className="hero-image-index">01 / 03</span>
             </div>
           </div>
           <div className="hero-scroll shell">
@@ -234,7 +312,7 @@ export default function Home() {
         </section>
 
         <section className="intro-strip">
-          <div className="shell intro-grid">
+          <div className="shell intro-grid" data-reveal>
             <div className="section-label">
               <span>01</span>
               <i /> A more considered clean
@@ -263,7 +341,7 @@ export default function Home() {
 
         <section id="services" className="section-block services-section">
           <div className="shell">
-            <div className="section-heading-row">
+            <div className="section-heading-row" data-reveal>
               <div>
                 <div className="eyebrow">
                   <span className="sparkle">✳</span> Care shaped around you
@@ -279,7 +357,7 @@ export default function Home() {
                 looking for and we will help you find the right next step.
               </p>
             </div>
-            <div className="services-editorial-grid">
+            <div className="services-editorial-grid" data-reveal>
               <article className="feature-service-card">
                 <img
                   src={bathroomImage}
@@ -324,11 +402,84 @@ export default function Home() {
                 </button>
               </div>
             </div>
+            <div className="cleaning-checklist" data-reveal>
+              <div className="cleaning-checklist-heading">
+                <span className="section-label">
+                  <i /> A clearer idea of the clean
+                </span>
+                <h3>Room by room, with care.</h3>
+                <p>
+                  Typical focus areas to help you plan. The exact checklist
+                  depends on the service and is confirmed with your quote.
+                </p>
+              </div>
+              <div className="cleaning-checklist-grid">
+                <article>
+                  <span className="checklist-icon">01</span>
+                  <h4>Kitchen</h4>
+                  <ul>
+                    <li>
+                      <Check size={15} /> Worktops and accessible surfaces
+                    </li>
+                    <li>
+                      <Check size={15} /> Sink, taps and hob area
+                    </li>
+                    <li>
+                      <Check size={15} /> Appliance exteriors, when agreed
+                    </li>
+                    <li>
+                      <Check size={15} /> Floor vacuum and mop
+                    </li>
+                  </ul>
+                </article>
+                <article>
+                  <span className="checklist-icon">02</span>
+                  <h4>Bathroom</h4>
+                  <ul>
+                    <li>
+                      <Check size={15} /> Basin, taps and toilet
+                    </li>
+                    <li>
+                      <Check size={15} /> Bath or shower surfaces
+                    </li>
+                    <li>
+                      <Check size={15} /> Mirrors and accessible surfaces
+                    </li>
+                    <li>
+                      <Check size={15} /> Floor vacuum and mop
+                    </li>
+                  </ul>
+                </article>
+                <article>
+                  <span className="checklist-icon">03</span>
+                  <h4>Living & bedrooms</h4>
+                  <ul>
+                    <li>
+                      <Check size={15} /> Dusting accessible surfaces
+                    </li>
+                    <li>
+                      <Check size={15} /> Tidy finishing touches
+                    </li>
+                    <li>
+                      <Check size={15} /> Mirrors and interior glass, if agreed
+                    </li>
+                    <li>
+                      <Check size={15} /> Carpets vacuumed and hard floors
+                      mopped
+                    </li>
+                  </ul>
+                </article>
+              </div>
+              <p className="checklist-note">
+                Inside cupboards, ovens, fridges and other add-ons should be
+                requested so they can be included in the quote.
+              </p>
+            </div>
           </div>
         </section>
 
         <section className="approach-band">
-          <div className="shell approach-grid">
+          <div className="shell approach-grid" data-reveal>
             <div className="approach-photo">
               <img
                 src={resetImage}
@@ -383,7 +534,7 @@ export default function Home() {
         </section>
 
         <section id="areas" className="areas-section">
-          <div className="shell areas-grid">
+          <div className="shell areas-grid" data-reveal>
             <div>
               <div className="eyebrow">
                 <span className="sparkle">✳</span> Close to home
@@ -412,7 +563,7 @@ export default function Home() {
         </section>
 
         <section className="care-promise">
-          <div className="shell care-promise-grid">
+          <div className="shell care-promise-grid" data-reveal>
             <div>
               <div className="eyebrow">
                 <span className="sparkle">✳</span> The little things matter
@@ -459,7 +610,7 @@ export default function Home() {
         </section>
 
         <section id="faq" className="section-block faq-section">
-          <div className="shell faq-grid">
+          <div className="shell faq-grid" data-reveal>
             <div>
               <div className="section-label">
                 <span>03</span>
@@ -496,6 +647,14 @@ export default function Home() {
                   "Send your area, property type, service and preferred date through the quote form.",
                 ],
                 [
+                  "When is my booking confirmed?",
+                  "The WhatsApp form sends an enquiry, not an instant reservation. Vellora will confirm availability and the agreed quote with you before your clean is booked.",
+                ],
+                [
+                  "Can I ask for a particular cleaning checklist?",
+                  "Yes. Add priorities or requested extras in the notes. The exact scope will be discussed and confirmed with your quote.",
+                ],
+                [
                   "Which areas do you cover?",
                   "We serve West Midlands, Northamptonshire, Leicestershire, Nottinghamshire and Derbyshire.",
                 ],
@@ -513,7 +672,7 @@ export default function Home() {
         </section>
 
         <section id="journal" className="journal-invite">
-          <div className="shell journal-invite-inner">
+          <div className="shell journal-invite-inner" data-reveal>
             <div>
               <div className="eyebrow">
                 <span className="sparkle">✳</span> From the Vellora journal
@@ -540,7 +699,7 @@ export default function Home() {
         </section>
 
         <section id="quote" className="quote-section">
-          <div className="shell quote-grid">
+          <div className="shell quote-grid" data-reveal>
             <div className="quote-intro">
               <div className="eyebrow">
                 <span className="sparkle">✳</span> Whenever you are ready
@@ -577,64 +736,141 @@ export default function Home() {
               {submitted ? (
                 <div className="form-success">
                   <div className="success-icon">
-                    <Check size={25} />
+                    <MessageCircle size={24} />
                   </div>
-                  <h3>Your note is ready to go.</h3>
+                  <h3>Your enquiry is ready in WhatsApp.</h3>
                   <p>
-                    Thank you. For now, please email the details directly and we
-                    will reply with the next step.
+                    Review the details in WhatsApp and tap send. Your cleaning
+                    is not booked until Vellora confirms availability with you.
                   </p>
                   <a
                     className="button-mint"
-                    href="mailto:hello.velloraclean@gmail.com?subject=Vellora%20Clean%20quote%20request"
+                    href={bookingUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
                   >
-                    Open email <ArrowRight size={16} />
+                    Continue to WhatsApp <ArrowRight size={16} />
                   </a>
                 </div>
               ) : (
                 <>
-                  <label>
-                    Your name
-                    <input
-                      required
-                      name="name"
-                      placeholder="How should we address you?"
-                      autoComplete="name"
-                    />
-                  </label>
-                  <label>
-                    Your area / postcode
-                    <input
-                      required
-                      name="area"
-                      placeholder="e.g. Birmingham, B1"
-                      autoComplete="postal-code"
-                    />
-                  </label>
-                  <label>
-                    What can we help with?
-                    <select name="service" defaultValue="">
-                      <option value="" disabled>
-                        Select a service
-                      </option>
-                      {services.map(service => (
-                        <option key={service.title}>{service.title}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label>
-                    Anything else?
-                    <textarea
-                      name="message"
-                      placeholder="Tell us a little about the space..."
-                      rows={3}
-                    />
-                  </label>
+                  <div className="quote-form-heading">
+                    <span className="booking-step">
+                      01 <i /> YOUR CLEANING ENQUIRY
+                    </span>
+                    <h3>Tell us about your space.</h3>
+                    <p>
+                      Share a few details for a tailored quote and availability
+                      check.
+                    </p>
+                  </div>
+                  <div className="booking-fields">
+                    <label>
+                      Full name <span className="field-required">Required</span>
+                      <input
+                        required
+                        name="name"
+                        placeholder="Your name"
+                        autoComplete="name"
+                      />
+                    </label>
+                    <label>
+                      Phone number{" "}
+                      <span className="field-required">Required</span>
+                      <input
+                        required
+                        name="phone"
+                        type="tel"
+                        placeholder="e.g. +44 7700 900000"
+                        autoComplete="tel"
+                      />
+                    </label>
+                    <label>
+                      Town / postcode{" "}
+                      <span className="field-required">Required</span>
+                      <input
+                        required
+                        name="area"
+                        placeholder="e.g. Birmingham, B1"
+                        autoComplete="postal-code"
+                      />
+                    </label>
+                    <label>
+                      Property type
+                      <select name="property" defaultValue="Home">
+                        <option>Home</option>
+                        <option>Flat / apartment</option>
+                        <option>Rental / holiday let</option>
+                        <option>Office / business</option>
+                        <option>Other</option>
+                      </select>
+                    </label>
+                    <label>
+                      Bedrooms
+                      <select name="bedrooms" defaultValue="">
+                        <option value="">Choose if relevant</option>
+                        <option>Studio</option>
+                        <option>1 bedroom</option>
+                        <option>2 bedrooms</option>
+                        <option>3 bedrooms</option>
+                        <option>4 bedrooms</option>
+                        <option>5+ bedrooms</option>
+                      </select>
+                    </label>
+                    <label>
+                      Bathrooms
+                      <select name="bathrooms" defaultValue="">
+                        <option value="">Choose if relevant</option>
+                        <option>1 bathroom</option>
+                        <option>2 bathrooms</option>
+                        <option>3 bathrooms</option>
+                        <option>4+ bathrooms</option>
+                      </select>
+                    </label>
+                    <label>
+                      Cleaning service{" "}
+                      <span className="field-required">Required</span>
+                      <select required name="service" defaultValue="">
+                        <option value="" disabled>
+                          Select a service
+                        </option>
+                        {services.map(service => (
+                          <option key={service.title}>{service.title}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      How often?
+                      <select name="frequency" defaultValue="One-off">
+                        <option>One-off</option>
+                        <option>Weekly</option>
+                        <option>Fortnightly</option>
+                        <option>Monthly</option>
+                        <option>Flexible / not sure</option>
+                      </select>
+                    </label>
+                    <label className="booking-date-field">
+                      Preferred date{" "}
+                      <span className="field-optional">Optional</span>
+                      <input name="date" type="date" />
+                    </label>
+                    <label className="booking-notes-field">
+                      Anything we should know?{" "}
+                      <span className="field-optional">Optional</span>
+                      <textarea
+                        name="message"
+                        placeholder="Property details, priorities or access notes…"
+                        rows={3}
+                      />
+                    </label>
+                  </div>
                   <Button type="submit" className="form-button">
-                    Request a tailored quote <ArrowRight size={16} />
+                    Continue with WhatsApp <MessageCircle size={17} />
                   </Button>
-                  <small>
-                    We will only use these details to respond to your enquiry.
+                  <small className="booking-disclaimer">
+                    WhatsApp opens with your enquiry ready to send. No slot is
+                    reserved until Vellora confirms availability and the quote
+                    with you.
                   </small>
                 </>
               )}

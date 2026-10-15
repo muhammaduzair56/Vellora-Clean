@@ -10,7 +10,7 @@ A polished, responsive UK cleaning-services website for Midlands homeowners, ten
 Vellora's own service list and Midlands coverage, journal route/slugs and article content, existing quote-form fields and interactions, and accessibility semantics. Do not copy Saarathi's reviews, prices, location, subscriptions or claims.
 
 ## Improve
-Remove broken remote image references; apply brand assets, colors and type consistently across home, blog and article pages. Add prominent functional WhatsApp booking links that open `wa.me/447859293986` with a prefilled booking enquiry. Keep the email quote form as an alternate path. Permit browser zoom. Respect reduced-motion preferences.
+Remove broken remote image references; apply brand assets, colors and type consistently across home, blog and article pages. Add prominent functional WhatsApp booking links that open `wa.me/447859293986` with a prefilled booking enquiry. Keep the email quote form as an alternate path. Permit browser zoom. Respect reduced-motion preferences. Booking capture should be clearly described as an enquiry until Vellora confirms availability and the quote. Provide a service-specific cleaning checklist without implying unconfirmed inclusions; mention extras need to be agreed. Keep photo captions/location text outside the hero image, and use restrained viewport reveals and entrance transitions inspired by the reference, without its promotional modal or claims.
 
 ## Remove
 Do not reuse the old “Vellora Cleaning” wording or the unsupported warm-gold/forest-green theme. Avoid fabricated testimonials, booking availability, service claims or newsletter capture.
