@@ -1,33 +1,30 @@
 import { FormEvent, useState } from "react";
 import {
+  ArrowDown,
   ArrowRight,
   Check,
   ChevronDown,
   ChevronRight,
   Clock3,
-  Home as HomeIcon,
   Instagram,
   Mail,
   Menu,
   MessageCircle,
   Sparkles,
-  Star,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { services, serviceAreas } from "@/lib/constants";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import {
+  services,
+  serviceAreas,
+  whatsappBookingUrl,
+  whatsappDisplayPhone,
+} from "@/lib/constants";
 
-const heroImage = "/manus-storage/vellora-hero-interior_7844e28a.png";
-const serviceImage = "/manus-storage/vellora-service-detail_6f37688d.png";
-const processImage = "/manus-storage/vellora-process-detail_e45738de.png";
-const brandMark = "/manus-storage/vellora-clean-mark_c199c87e.png";
-const beforeKitchen = "/manus-storage/vellora-before-kitchen_8092324d.png";
-const afterKitchen = "/manus-storage/vellora-after-kitchen_f5be3759.png";
-const beforeBathroom = "/manus-storage/vellora-before-bathroom_c24f3407.png";
-const afterBathroom = "/manus-storage/vellora-after-bathroom_8e4e84e6.png";
+const heroImage = "/images/vellora-hero.webp";
+const bathroomImage = "/images/vellora-bathroom.webp";
+const resetImage = "/images/vellora-reset.webp";
 
-// Vellora Clean style reminder: asymmetric editorial layouts, navy/mint/lavender, calm motion, precise service copy.
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -42,111 +39,690 @@ export default function Home() {
     setSubmitted(true);
   };
 
+  const navigation = [
+    ["services", "Services"],
+    ["how-it-works", "Our approach"],
+    ["areas", "Areas"],
+    ["faq", "FAQs"],
+  ];
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f5f8f8] text-[#062b63] selection:bg-[#39d6b4]/30">
+    <div className="min-h-screen overflow-x-hidden bg-[#f8fbfe] text-[#263442] selection:bg-[#B69AE8]/30">
       <header className="site-header">
         <div className="shell header-inner">
-          <a href="#top" className="brand-lockup" aria-label="Vellora Clean home">
-            <span className="brand-mark-wrap"><img src={brandMark} alt="" className="brand-mark" /></span>
-            <span><strong>VELLORA</strong><em>CLEAN</em></span>
+          <a
+            href="#top"
+            className="brand-lockup"
+            aria-label="Vellora Clean home"
+          >
+            <span className="brand-mark-wrap">
+              <img
+                className="brand-mark"
+                src="/images/vellora-mark.png"
+                alt=""
+              />
+            </span>
+            <span className="wordmark">
+              <strong>VELLORA</strong>
+              <em>CLEAN</em>
+              <small>Cleaner Spaces. Better Places.</small>
+            </span>
           </a>
           <nav className="desktop-nav" aria-label="Main navigation">
-            <button onClick={() => scrollTo("services")}>Services</button>
-            <button onClick={() => scrollTo("how-it-works")}>How it works</button>
-            <button onClick={() => scrollTo("areas")}>Service areas</button>
-            <button onClick={() => scrollTo("faq")}>FAQ</button><a href="/blog">Journal</a>
+            {navigation.map(([id, label]) => (
+              <button key={id} onClick={() => scrollTo(id)}>
+                {label}
+              </button>
+            ))}
+            <a href="/blog">Journal</a>
           </nav>
           <div className="header-actions">
-            <a className="header-email" href="mailto:hello.velloraclean@gmail.com">hello.velloraclean@gmail.com</a>
-            <Button className="nav-cta" onClick={() => scrollTo("quote")}>Request a quote <ArrowRight size={16} /></Button>
-            <button className="menu-trigger" aria-label="Open menu" onClick={() => setMenuOpen(true)}><Menu size={24} /></button>
+            <a
+              className="header-email"
+              href="mailto:hello.velloraclean@gmail.com"
+            >
+              Get in touch
+            </a>
+            <a
+              className="nav-cta"
+              href={whatsappBookingUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Book on WhatsApp <MessageCircle size={15} />
+            </a>
+            <button
+              className="menu-trigger"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Menu size={23} />
+            </button>
           </div>
         </div>
       </header>
 
       {menuOpen && (
-        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div
+          className="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+        >
           <div className="mobile-menu-top">
-            <span className="eyebrow">Vellora Clean</span>
-            <button aria-label="Close menu" onClick={() => setMenuOpen(false)}><X size={28} /></button>
+            <span className="brand-mark-wrap">
+              <img
+                className="brand-mark"
+                src="/images/vellora-mark.png"
+                alt=""
+              />
+            </span>
+            <span className="wordmark">
+              <strong>VELLORA</strong>
+              <em>CLEAN</em>
+              <small>Cleaner Spaces. Better Places.</small>
+            </span>
+            <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+              <X size={27} />
+            </button>
           </div>
           <nav>
-            {[['services', 'Services'], ['how-it-works', 'How it works'], ['areas', 'Service areas'], ['faq', 'FAQ'], ['quote', 'Request a quote']].map(([id, label]) => (
-              <button key={id} onClick={() => scrollTo(id)}>{label}<ChevronRight size={22} /></button>
+            {navigation.map(([id, label]) => (
+              <button key={id} onClick={() => scrollTo(id)}>
+                {label}
+                <ChevronRight size={20} />
+              </button>
             ))}
-            <button onClick={() => { setMenuOpen(false); window.location.href = '/blog'; }}>Journal <ChevronRight size={22} /></button>
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                window.location.href = "/blog";
+              }}
+            >
+              Journal
+              <ChevronRight size={20} />
+            </button>
+            <button onClick={() => scrollTo("quote")}>
+              Request a quote
+              <ChevronRight size={20} />
+            </button>
+            <a
+              className="mobile-whatsapp-link"
+              href={whatsappBookingUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              onClick={() => setMenuOpen(false)}
+            >
+              Book on WhatsApp <MessageCircle size={18} />
+            </a>
           </nav>
-          <p>Professional cleaning for homes, rentals and businesses across the Midlands.</p>
+          <p>
+            Thoughtful cleaning for homes, rentals and businesses across the
+            Midlands.
+          </p>
         </div>
       )}
 
       <main id="top">
         <section className="hero-section">
-          <div className="hero-arc" />
-          <div className="shell hero-grid">
+          <div className="hero-grid shell">
             <div className="hero-copy">
-              <div className="eyebrow"><span className="sparkle">✦</span> Midlands cleaning, considered</div>
-              <h1>A brighter<br /><span>standard</span> of clean.</h1>
-              <p className="hero-lede">Detail-focused cleaning for homes, rentals and businesses that deserve to feel beautifully looked after.</p>
-              <div className="hero-buttons">
-                <Button className="button-mint" onClick={() => scrollTo("quote")}>Tell us what needs refreshing <ArrowRight size={17} /></Button>
-                <button className="text-link" onClick={() => scrollTo("services")}>Explore services <ChevronDown size={17} /></button>
+              <div className="eyebrow">
+                <span className="sparkle">✳</span> Thoughtful home care · The
+                Midlands
               </div>
-              <div className="hero-trust"><span><Check size={15} /> Tailored quotes</span><span><Check size={15} /> Thoughtful details</span><span><Check size={15} /> Local service</span></div>
+              <h1>
+                A little more
+                <br />
+                <em>room to breathe.</em>
+              </h1>
+              <p className="hero-lede">
+                A considered clean can change the feeling of a whole space.
+                Vellora brings calm, detailed care to homes, rentals and local
+                businesses.
+              </p>
+              <div className="hero-buttons">
+                <a
+                  className="button-mint whatsapp-booking-button"
+                  href={whatsappBookingUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Book on WhatsApp <MessageCircle size={16} />
+                </a>
+                <button
+                  className="text-link"
+                  onClick={() => scrollTo("services")}
+                >
+                  Explore our services <ChevronDown size={16} />
+                </button>
+              </div>
+              <div className="hero-trust">
+                <span>
+                  <Check size={14} /> Tailored quotes
+                </span>
+                <span>
+                  <Check size={14} /> Local service
+                </span>
+                <span>
+                  <Check size={14} /> Care in the details
+                </span>
+              </div>
             </div>
             <div className="hero-visual">
-              <img src={heroImage} alt="Bright, beautifully clean modern kitchen and living space" />
-              <div className="hero-caption"><Sparkles size={18} /><span>Clean feels different<br /><strong>when every detail is cared for.</strong></span></div>
-              <div className="hero-location">Serving the Midlands <span>•</span> UK</div>
+              <img
+                src={heroImage}
+                alt="Sunlit, freshly cared-for living space in a calm modern home"
+                fetchPriority="high"
+              />
+              <div className="hero-caption">
+                <Sparkles size={17} />
+                <span>
+                  Come home to a space
+                  <br />
+                  <strong>that feels like yours again.</strong>
+                </span>
+              </div>
+              <div className="hero-location">Proudly serving the Midlands</div>
+              <span className="hero-image-index">01 / 03</span>
             </div>
+          </div>
+          <div className="hero-scroll shell">
+            <span>Take a look around</span>
+            <ArrowDown size={15} />
           </div>
         </section>
 
         <section className="intro-strip">
           <div className="shell intro-grid">
-            <div className="section-label"><span>01</span><i /> The Vellora way</div>
-            <div><h2>More than a clean.<br /><em>A considered reset.</em></h2></div>
-            <div className="intro-copy"><p>Whether it is a weekly rhythm, a new chapter or a space ready for guests, Vellora brings a calm, detailed approach to the work.</p><button className="text-link" onClick={() => scrollTo("how-it-works")}>See how it works <ArrowRight size={16} /></button></div>
+            <div className="section-label">
+              <span>01</span>
+              <i /> A more considered clean
+            </div>
+            <div>
+              <h2>
+                Not just tidy.
+                <br />
+                <em>At ease.</em>
+              </h2>
+            </div>
+            <div className="intro-copy">
+              <p>
+                From the weekly rhythm to a fresh start between homes, we bring
+                a thoughtful approach to the spaces that matter to you.
+              </p>
+              <button
+                className="text-link"
+                onClick={() => scrollTo("how-it-works")}
+              >
+                Our approach <ArrowRight size={15} />
+              </button>
+            </div>
           </div>
         </section>
 
         <section id="services" className="section-block services-section">
           <div className="shell">
-            <div className="section-heading-row"><div><div className="eyebrow"><span className="sparkle">✦</span> Made around your space</div><h2>Cleaning that fits<br /><em>real life.</em></h2></div><p>From a focused reset to a reliable recurring rhythm, choose the kind of care your space is asking for.</p></div>
-            <div className="services-layout">
-              <div className="service-image-card"><img src={serviceImage} alt="Spotless kitchen surface with refined details" /><div className="image-note">A quiet kind of <span>care</span>.</div></div>
-              <div className="service-list">{services.map((service, index) => <article className="service-item" key={service.title}><span className="service-number">0{index + 1}</span><div><h3>{service.title}</h3><p>{service.description}</p></div><ChevronRight size={20} /></article>)}</div>
+            <div className="section-heading-row">
+              <div>
+                <div className="eyebrow">
+                  <span className="sparkle">✳</span> Care shaped around you
+                </div>
+                <h2>
+                  Find your kind
+                  <br />
+                  <em>of clean.</em>
+                </h2>
+              </div>
+              <p>
+                No two spaces need quite the same thing. Tell us what you are
+                looking for and we will help you find the right next step.
+              </p>
+            </div>
+            <div className="services-editorial-grid">
+              <article className="feature-service-card">
+                <img
+                  src={bathroomImage}
+                  alt="Bright, freshly cleaned bathroom with calm natural light"
+                  loading="lazy"
+                />
+                <div className="feature-service-overlay">
+                  <span>A fresh feeling, room by room</span>
+                  <h3>
+                    Care in every
+                    <br />
+                    corner.
+                  </h3>
+                  <button
+                    className="feature-service-link"
+                    onClick={() => scrollTo("quote")}
+                  >
+                    Let us help <ArrowRight size={15} />
+                  </button>
+                </div>
+              </article>
+              <div className="service-list">
+                {services.map((service, index) => (
+                  <button
+                    className="service-item"
+                    key={service.title}
+                    onClick={() => scrollTo("quote")}
+                  >
+                    <span className="service-number">0{index + 1}</span>
+                    <span className="service-item-copy">
+                      <strong>{service.title}</strong>
+                      <small>{service.description}</small>
+                    </span>
+                    <ChevronRight size={18} />
+                  </button>
+                ))}
+                <button
+                  className="services-contact-link"
+                  onClick={() => scrollTo("quote")}
+                >
+                  Ask us about your space <ArrowRight size={15} />
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="results" className="section-block results-section">
-          <div className="shell">
-            <div className="section-heading-row results-heading"><div><div className="eyebrow"><span className="sparkle">✦</span> The difference is in the detail</div><h2>From lived-in<br /><em>to lovely.</em></h2></div><p>See the kind of thoughtful transformation Vellora Clean is built around—from high-use kitchens to the details that make a bathroom feel fresh again.</p></div>
-            <div className="results-grid">
-              <article className="result-card"><div className="result-card-top"><span>Kitchen reset</span><span>Illustrative example</span></div><BeforeAfterSlider before={beforeKitchen} after={afterKitchen} beforeAlt="Illustrative kitchen before a professional clean" afterAlt="Illustrative kitchen after a professional clean" /><div className="result-card-footer"><h3>Everyday surfaces, considered.</h3><p>Worktops, fixtures and the small touchpoints that change how a kitchen feels.</p></div></article>
-              <article className="result-card"><div className="result-card-top"><span>Bathroom detail</span><span>Illustrative example</span></div><BeforeAfterSlider before={beforeBathroom} after={afterBathroom} beforeAlt="Illustrative bathroom before a professional clean" afterAlt="Illustrative bathroom after a professional clean" /><div className="result-card-footer"><h3>A clearer kind of calm.</h3><p>Polished surfaces, bright glass and a finish that feels cared for.</p></div></article>
+        <section className="approach-band">
+          <div className="shell approach-grid">
+            <div className="approach-photo">
+              <img
+                src={resetImage}
+                alt="Illustrative light-filled rental living room ready for a fresh start"
+                loading="lazy"
+              />
+              <span>Illustrative imagery · spaces shown are examples.</span>
             </div>
-            <div className="results-disclaimer"><span className="sparkle">✦</span><p>These are illustrative visuals for the website. We will replace them with original Vellora Clean project photography as your results library grows.</p><button className="text-link" onClick={() => scrollTo("quote")}>Start your project <ArrowRight size={16} /></button></div>
+            <div className="approach-copy" id="how-it-works">
+              <div className="section-label">
+                <span>02</span>
+                <i /> A simple way forward
+              </div>
+              <h2>
+                Easy from
+                <br />
+                <em>the first hello.</em>
+              </h2>
+              <p>
+                Getting the right help should feel straightforward. Share a
+                little about your space and we will take it from there.
+              </p>
+              <div className="steps">
+                {[
+                  [
+                    "01",
+                    "Tell us about your space",
+                    "Share your area, service and preferred timing.",
+                  ],
+                  [
+                    "02",
+                    "Receive a tailored quote",
+                    "We will come back with clear next steps.",
+                  ],
+                  [
+                    "03",
+                    "Enjoy the reset",
+                    "A considered clean, finished with care.",
+                  ],
+                ].map(([n, title, copy]) => (
+                  <div className="step" key={n}>
+                    <span>{n}</span>
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{copy}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="how-it-works" className="section-block process-section">
-          <div className="shell process-grid">
-            <div className="process-copy"><div className="section-label"><span>02</span><i /> How it works</div><h2>Simple from<br /><em>first hello.</em></h2><p>Good service should feel easy. Tell us what you need, we will shape the details, and you can get back to the things that matter.</p><div className="steps">{[['01', 'Tell us about your space', 'Share your area, service and preferred timing.'], ['02', 'Receive a tailored quote', 'We will come back with clear next steps.'], ['03', 'Enjoy the reset', 'A considered clean, finished with care.']].map(([n, title, copy]) => <div className="step" key={n}><span>{n}</span><div><h3>{title}</h3><p>{copy}</p></div></div>)}</div></div>
-            <div className="process-visual"><img src={processImage} alt="Sunlight through a freshly cleaned window" /><div className="process-badge"><Clock3 size={18} /><span>Thoughtful<br /><strong>by design.</strong></span></div></div>
+        <section id="areas" className="areas-section">
+          <div className="shell areas-grid">
+            <div>
+              <div className="eyebrow">
+                <span className="sparkle">✳</span> Close to home
+              </div>
+              <h2>
+                Across the
+                <br />
+                <span>Midlands.</span>
+              </h2>
+            </div>
+            <div>
+              <p>
+                We care for homes, rental properties and local workplaces across
+                the region.
+              </p>
+              <div className="area-tags">
+                {serviceAreas.map(area => (
+                  <span key={area}>{area}</span>
+                ))}
+              </div>
+              <button className="text-link" onClick={() => scrollTo("quote")}>
+                Ask about your area <ArrowRight size={15} />
+              </button>
+            </div>
           </div>
         </section>
 
-        <section id="areas" className="areas-section"><div className="shell areas-grid"><div><div className="eyebrow"><span className="sparkle">✦</span> Local, by design</div><h2>Across the<br /><span>Midlands.</span></h2></div><div><p>Vellora Clean serves homes, landlords, tenants, hosts and local businesses across the region.</p><div className="area-tags">{serviceAreas.map((area) => <span key={area}>{area}</span>)}</div></div></div></section>
+        <section className="care-promise">
+          <div className="shell care-promise-grid">
+            <div>
+              <div className="eyebrow">
+                <span className="sparkle">✳</span> The little things matter
+              </div>
+              <h2>
+                Good care feels
+                <br />
+                <em>like being noticed.</em>
+              </h2>
+            </div>
+            <div className="care-points">
+              <article>
+                <span>01</span>
+                <div>
+                  <h3>A clear conversation</h3>
+                  <p>
+                    We start by understanding your space and what you would like
+                    help with.
+                  </p>
+                </div>
+              </article>
+              <article>
+                <span>02</span>
+                <div>
+                  <h3>Details worth noticing</h3>
+                  <p>
+                    We take a considered approach to the everyday surfaces and
+                    finishing touches.
+                  </p>
+                </div>
+              </article>
+              <article>
+                <span>03</span>
+                <div>
+                  <h3>A plan that fits</h3>
+                  <p>
+                    Your quote starts with your property, service and preferred
+                    timing—not a one-size-fits-all price.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
 
-        <section id="faq" className="section-block faq-section"><div className="shell faq-grid"><div><div className="section-label"><span>03</span><i /> Good to know</div><h2>Questions,<br /><em>answered.</em></h2><p>Still deciding what kind of clean you need? Send us a message and we will help you choose.</p><a className="text-link" href="mailto:hello.velloraclean@gmail.com">Email the team <ArrowRight size={16} /></a></div><div className="faq-list">{[['Do you offer one-off deep cleans?', 'Yes. One-off deep cleaning is available for homes, refreshes and move-related moments.'], ['Can you clean rental or Airbnb properties?', 'Yes. We offer end-of-tenancy and serviced-accommodation cleaning, subject to availability.'], ['How do I get a quote?', 'Send your area, property type, service and preferred date through the quote form.'], ['Which areas do you cover?', 'We serve West Midlands, Northamptonshire, Leicestershire, Nottinghamshire and Derbyshire.']].map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div></section>
+        <section id="faq" className="section-block faq-section">
+          <div className="shell faq-grid">
+            <div>
+              <div className="section-label">
+                <span>03</span>
+                <i /> Good to know
+              </div>
+              <h2>
+                Questions,
+                <br />
+                <em>answered.</em>
+              </h2>
+              <p>
+                Not sure where to start? Send us a note and we will help you
+                choose.
+              </p>
+              <a
+                className="text-link"
+                href="mailto:hello.velloraclean@gmail.com"
+              >
+                Email the team <ArrowRight size={15} />
+              </a>
+            </div>
+            <div className="faq-list">
+              {[
+                [
+                  "Do you offer one-off deep cleans?",
+                  "Yes. One-off deep cleaning is available for homes, refreshes and move-related moments.",
+                ],
+                [
+                  "Can you clean rental or Airbnb properties?",
+                  "Yes. We offer end-of-tenancy and serviced-accommodation cleaning, subject to availability.",
+                ],
+                [
+                  "How do I get a quote?",
+                  "Send your area, property type, service and preferred date through the quote form.",
+                ],
+                [
+                  "Which areas do you cover?",
+                  "We serve West Midlands, Northamptonshire, Leicestershire, Nottinghamshire and Derbyshire.",
+                ],
+              ].map(([question, answer]) => (
+                <details key={question}>
+                  <summary>
+                    {question}
+                    <span>+</span>
+                  </summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <section id="quote" className="quote-section"><div className="shell quote-grid"><div className="quote-intro"><div className="eyebrow"><span className="sparkle">✦</span> Let us make space for better</div><h2>Tell us what needs <em>refreshing.</em></h2><p>Share a few details and we will be in touch with availability and the next step for your tailored quote.</p><div className="quote-contact"><Mail size={18} /><a href="mailto:hello.velloraclean@gmail.com">hello.velloraclean@gmail.com</a></div></div><form className="quote-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={28} /></div><h3>Your note is ready to go.</h3><p>Thank you. For now, please email the details directly and we will reply with the next step.</p><a className="button-mint" href="mailto:hello.velloraclean@gmail.com?subject=Vellora%20Clean%20quote%20request">Open email <ArrowRight size={17} /></a></div> : <><label>Your name<input required name="name" placeholder="How should we address you?" /></label><label>Your area / postcode<input required name="area" placeholder="e.g. Birmingham, B1" /></label><label>What can we help with?<select name="service" defaultValue=""><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.title}>{service.title}</option>)}</select></label><label>Anything else? <textarea name="message" placeholder="Tell us a little about the space..." rows={3} /></label><Button type="submit" className="form-button">Request a tailored quote <ArrowRight size={17} /></Button><small>We will only use these details to respond to your enquiry.</small></>}</form></div></section>
+        <section id="journal" className="journal-invite">
+          <div className="shell journal-invite-inner">
+            <div>
+              <div className="eyebrow">
+                <span className="sparkle">✳</span> From the Vellora journal
+              </div>
+              <h2>
+                Notes for a<br />
+                <em>lighter home.</em>
+              </h2>
+            </div>
+            <div>
+              <p>
+                Practical cleaning ideas, calm routines and useful guidance for
+                homes, rentals and local workspaces.
+              </p>
+              <a href="/blog" className="text-link">
+                Explore the journal <ArrowRight size={15} />
+              </a>
+            </div>
+            <div className="journal-mark">
+              <span>V</span>
+              <small>VELLORA NOTES · EST. 2026</small>
+            </div>
+          </div>
+        </section>
+
+        <section id="quote" className="quote-section">
+          <div className="shell quote-grid">
+            <div className="quote-intro">
+              <div className="eyebrow">
+                <span className="sparkle">✳</span> Whenever you are ready
+              </div>
+              <h2>
+                Let us make a little <em>space for better.</em>
+              </h2>
+              <p>
+                Share a few details and we will be in touch with availability
+                and the next step for your tailored quote.
+              </p>
+              <div className="quote-contact">
+                <Mail size={17} />
+                <a href="mailto:hello.velloraclean@gmail.com">
+                  hello.velloraclean@gmail.com
+                </a>
+              </div>
+              <div className="quote-contact whatsapp-contact">
+                <MessageCircle size={17} />
+                <a
+                  href={whatsappBookingUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  WhatsApp · {whatsappDisplayPhone}
+                </a>
+              </div>
+              <div className="quote-note">
+                <Clock3 size={15} /> Tell us what works for you. We will take it
+                from there.
+              </div>
+            </div>
+            <form className="quote-form" onSubmit={handleSubmit}>
+              {submitted ? (
+                <div className="form-success">
+                  <div className="success-icon">
+                    <Check size={25} />
+                  </div>
+                  <h3>Your note is ready to go.</h3>
+                  <p>
+                    Thank you. For now, please email the details directly and we
+                    will reply with the next step.
+                  </p>
+                  <a
+                    className="button-mint"
+                    href="mailto:hello.velloraclean@gmail.com?subject=Vellora%20Clean%20quote%20request"
+                  >
+                    Open email <ArrowRight size={16} />
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <label>
+                    Your name
+                    <input
+                      required
+                      name="name"
+                      placeholder="How should we address you?"
+                      autoComplete="name"
+                    />
+                  </label>
+                  <label>
+                    Your area / postcode
+                    <input
+                      required
+                      name="area"
+                      placeholder="e.g. Birmingham, B1"
+                      autoComplete="postal-code"
+                    />
+                  </label>
+                  <label>
+                    What can we help with?
+                    <select name="service" defaultValue="">
+                      <option value="" disabled>
+                        Select a service
+                      </option>
+                      {services.map(service => (
+                        <option key={service.title}>{service.title}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Anything else?
+                    <textarea
+                      name="message"
+                      placeholder="Tell us a little about the space..."
+                      rows={3}
+                    />
+                  </label>
+                  <Button type="submit" className="form-button">
+                    Request a tailored quote <ArrowRight size={16} />
+                  </Button>
+                  <small>
+                    We will only use these details to respond to your enquiry.
+                  </small>
+                </>
+              )}
+            </form>
+          </div>
+        </section>
       </main>
 
-      <footer className="site-footer"><div className="shell footer-grid"><div><a href="#top" className="brand-lockup footer-brand"><span className="brand-mark-wrap"><img src={brandMark} alt="" className="brand-mark" /></span><span><strong>VELLORA</strong><em>CLEAN</em></span></a><p>A brighter standard of clean.<br />Thoughtful service across the Midlands.</p></div><div><span className="footer-label">Explore</span><button onClick={() => scrollTo("services")}>Services</button><button onClick={() => scrollTo("how-it-works")}>How it works</button><button onClick={() => scrollTo("quote")}>Request a quote</button></div><div><span className="footer-label">Connect</span><a href="mailto:hello.velloraclean@gmail.com">Email us</a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><Instagram size={16} /> Instagram</a><a href="https://www.facebook.com/profile.php?id=61593993243458" target="_blank" rel="noreferrer">Facebook</a></div></div><div className="shell footer-bottom"><span>© 2026 Vellora Clean</span><span>West Midlands · Northamptonshire · Leicestershire · Nottinghamshire · Derbyshire</span></div></footer>
-      <a className="floating-message" href="mailto:hello.velloraclean@gmail.com?subject=Vellora%20Clean%20enquiry"><MessageCircle size={19} /> <span>Message us</span></a>
+      <footer className="site-footer">
+        <div className="shell footer-grid">
+          <div>
+            <a
+              href="#top"
+              className="brand-lockup footer-brand"
+              aria-label="Vellora Clean home"
+            >
+              <span className="brand-mark-wrap">
+                <img
+                  className="brand-mark"
+                  src="/images/vellora-mark.png"
+                  alt=""
+                />
+              </span>
+              <span className="wordmark">
+                <strong>VELLORA</strong>
+                <em>CLEAN</em>
+              </span>
+            </a>
+            <p>
+              Cleaner Spaces. Better Places.
+              <br />
+              Thoughtful cleaning across the Midlands.
+            </p>
+          </div>
+          <div>
+            <span className="footer-label">Explore</span>
+            <button onClick={() => scrollTo("services")}>Services</button>
+            <button onClick={() => scrollTo("how-it-works")}>
+              Our approach
+            </button>
+            <a href="/blog">Journal</a>
+            <button onClick={() => scrollTo("quote")}>Request a quote</button>
+          </div>
+          <div>
+            <span className="footer-label">Connect</span>
+            <a href="mailto:hello.velloraclean@gmail.com">
+              <Mail size={15} /> Email us
+            </a>
+            <a
+              href={whatsappBookingUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <MessageCircle size={15} /> WhatsApp · {whatsappDisplayPhone}
+            </a>
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Instagram size={15} /> Instagram
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61593993243458"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
+            </a>
+          </div>
+        </div>
+        <div className="shell footer-bottom">
+          <span>© 2026 Vellora Clean</span>
+          <span>
+            West Midlands · Northamptonshire · Leicestershire · Nottinghamshire
+            · Derbyshire
+          </span>
+        </div>
+      </footer>
+      <a
+        className="floating-message whatsapp-float"
+        href={whatsappBookingUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="Book a cleaning service on WhatsApp"
+      >
+        <MessageCircle size={17} /> <span>Book on WhatsApp</span>
+      </a>
     </div>
   );
 }

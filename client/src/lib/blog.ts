@@ -18,7 +18,7 @@ export const blogPosts: BlogPost[] = [
     date: "06 Sep 2026",
     title: "The quiet reset: a practical deep-cleaning guide",
     excerpt: "A calm, room-by-room way to make a one-off deep clean feel manageable and genuinely restorative.",
-    image: "/manus-storage/vellora-blog-deep-clean_a92577aa.png",
+    image: "/images/vellora-reset.webp",
     readTime: "5 min read",
     intro: "A deep clean should feel like a reset rather than a race. The most useful approach is to work in a considered order, giving the high-touch and high-build-up areas the attention they need.",
     sections: [
@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
     date: "02 Sep 2026",
     title: "Why clear windows change the feeling of a room",
     excerpt: "Light, glass and the final details that make a freshly cared-for home feel brighter from the first look.",
-    image: "/manus-storage/vellora-blog-window-clean_0dcebe64.png",
+    image: "/images/vellora-hero.webp",
     readTime: "4 min read",
     intro: "Window cleaning is often treated as a finishing job, but clear glass changes the atmosphere of a room. It lets daylight travel further and makes the whole space feel more intentional.",
     sections: [
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     date: "28 Aug 2026",
     title: "A smoother end-of-tenancy reset",
     excerpt: "The practical details that help tenants, landlords and property teams prepare a home for its next chapter.",
-    image: "/manus-storage/vellora-blog-tenancy_348df171.png",
+    image: "/images/vellora-bathroom.webp",
     readTime: "6 min read",
     intro: "End-of-tenancy cleaning is part presentation, part process. A clear checklist helps everyone understand what needs attention before keys change hands.",
     sections: [
